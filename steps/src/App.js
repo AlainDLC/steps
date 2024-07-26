@@ -1,27 +1,48 @@
+import { useState } from "react";
+
 const messages = [
   "Learn React ⚛️",
-  "Apply for jobs 💼",
+  "Apply for jobs 👻",
   "Invest your new income 🤑",
 ];
 
 export default function App() {
-  const step = 1;
+  const [step, setStep] = useState(1);
+
+  // React's best practices for state updates that depend on the previous state.
+  function handleClickPrevious() {
+    setStep((prevStep) => Math.max(prevStep - 1, 1));
+
+    // if(step > 1)  setStep(step - 1);
+  }
+
+  function handleClickNext() {
+    setStep((prevStep) => Math.min(prevStep + 1, 3));
+  }
 
   return (
     <div className="steps">
       <div className="numbers">
-        <div className={`${step >= 1 ? "active" : ""}`}>1</div>
-        <div className={`${step >= 2 ? "active" : ""}`}>2</div>
-        <div className={`${step >= 3 ? "active" : ""}`}>3</div>
+        <div className={step >= 1 ? "active" : ""}>1</div>
+        <div className={step >= 2 ? "active" : ""}>1</div>
+        <div className={step >= 3 ? "active" : ""}>1</div>
       </div>
       <p className="message">
         Step {step}: {messages[step - 1]}
       </p>
       <div className="buttons">
-        <button style={{ backgroundColor: "#7950f2", color: "white" }}>
+        <button
+          type="button"
+          style={{ backgroundColor: "#7950f2", color: "white" }}
+          onClick={handleClickPrevious}
+        >
           Previous
         </button>
-        <button style={{ backgroundColor: "#7950f2", color: "white" }}>
+        <button
+          type="button"
+          onClick={handleClickNext}
+          style={{ backgroundColor: "#7950f2", color: "white" }}
+        >
           Next
         </button>
       </div>
